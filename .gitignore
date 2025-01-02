@@ -4,3 +4,6 @@
 *.egg-info
 matches.json
 search_results.json
+
+__pycache__
+*.pyc
