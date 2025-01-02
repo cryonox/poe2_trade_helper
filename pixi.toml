@@ -1,0 +1,17 @@
+[project]
+authors = ["cryonox <cryonox@gmail.com>"]
+channels = ["conda-forge"]
+description = "Add a short description here"
+name = "poe2_trade"
+platforms = ["win-64","linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "3.10.0.*"
+
+[pypi-dependencies]
+requests = ">=2.32.3, <3"
+rich = ">=13.9.4, <14"
+tqdm = ">=4.67.1, <5"
