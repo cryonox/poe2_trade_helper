@@ -1,3 +1,4 @@
+
 import requests
 import time
 from rich import print
@@ -46,7 +47,7 @@ class POETradeAPI:
                 return []
 
             item_ids = search_data["result"]
-            time.sleep(0.4)
+            time.sleep(0.5)
             results = []
             for i in range(0, len(item_ids), 10):
                 fetch_url = f"{self.base_url}/fetch/{','.join(item_ids[i:i+10])}"
@@ -57,30 +58,17 @@ class POETradeAPI:
                 # 12 requests in 4 seconds
                 # 16 requests in 12 seconds
                 # not follow and timeout for 60 second
-                time.sleep(0.4)
+                time.sleep(0.5)
             return results
 
         except requests.exceptions.RequestException as e:
             print(f"API request error: {e}")
             return None
 
-
-def search():
-    api = POETradeAPI()
-    print("Searching...")
-    results = []
-    for i in tqdm(range(C.min_div, C.max_div+1)):
-        search_results = api.search(min_div=i)
-        results.extend(search_results)
-        # pdb.set_trace()
-    print(f'found {len(results)} items ')
-    with open('search_results.json', 'w', encoding='utf8') as f:
-        json.dump(results, f, ensure_ascii=False)
+def check_match(results):
     matches = []
     lowest = 999
-
     for r in results:
-
         try:
 
             if not r['item']['identified']:
@@ -106,15 +94,32 @@ def search():
             print(r)
             pass
 
-    print(f'lowest price found is {lowest}. Found {len(matches)} matches')
-
     with open('matches.json', 'w', encoding='utf8') as f:
         json.dump(matches, f, ensure_ascii=False)
-
+    print(f'lowest price found is {lowest}. Found {len(matches)} matches')
     if len(matches) > 0:
+        for m in matches:
+            print(m['whisper'])
+            print('\n')
         while True:
             utils.play('assets/found.mp3')
             time.sleep(C.alarm_interval)
+
+def search():
+    api = POETradeAPI()
+    print("Searching...")
+    results = []
+    for i in tqdm(range(C.min_div, C.max_div+1)):
+        search_results = api.search(min_div=i)
+        check_match(search_results)
+        results.extend(search_results)
+
+    with open('search_results.json', 'w', encoding='utf8') as f:
+        json.dump(results, f, ensure_ascii=False)
+
+    
+
+
 
 
 if __name__ == "__main__":
