@@ -74,8 +74,8 @@ def main():
         results.extend(search_results)
         #pdb.set_trace()
     print(f'found {len(results)} items ')
-    with open('search_results.json', 'w') as f:
-        json.dump(results, f)
+    with open('search_results.json', 'w', encoding='utf8') as f:
+        json.dump(results, f, ensure_ascii=False)
     matches = []
     for r in results:
         try:
@@ -95,8 +95,8 @@ def main():
             print(e)
             pass
 
-    with open('matches.json', 'w') as f:
-        json.dump(matches, f)
+    with open('matches.json', 'w', encoding='utf8') as f:
+        json.dump(matches, f, ensure_ascii=False)
 
 if __name__ == "__main__":
     main()
