@@ -13,8 +13,7 @@ class POETradeAPI:
     def __init__(self):
         self.base_url = "https://www.pathofexile.com/api/trade2"
         self.headers = {
-            # dosnt need it , but might help with rate limit if you put in one
-            # 'Cookie': f'POESESSID=11111111111111111111111111111111',
+            'Cookie': f'POESESSID={C.POESESSID}',
             "User-Agent": "POE-Trade-Search/1.0",
         }
 
@@ -65,6 +64,7 @@ class POETradeAPI:
             print(f"API request error: {e}")
             return None
 
+
 def check_match(results):
     matches = []
     lowest = 999
@@ -102,8 +102,9 @@ def check_match(results):
             print(m['whisper'])
             print('\n')
         while True:
-            utils.play('assets/found.mp3')
+            utils.play('assets/found2.mp3')
             time.sleep(C.alarm_interval)
+
 
 def search():
     api = POETradeAPI()
@@ -116,10 +117,6 @@ def search():
 
     with open('search_results.json', 'w', encoding='utf8') as f:
         json.dump(results, f, ensure_ascii=False)
-
-    
-
-
 
 
 if __name__ == "__main__":

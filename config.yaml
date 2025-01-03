@@ -1,9 +1,10 @@
 min_div: 1
-max_div: 7
+max_div: 3
 
 delay: 20
 ignore_ids: [
-
-
 ]
 alarm_interval: 20
+
+# need to set this for live search to work and for higher rate limits
+POESESSID: '11111111111111111111111111111111'

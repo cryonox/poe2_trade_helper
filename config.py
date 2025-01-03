@@ -1,5 +1,5 @@
 import yaml
-
+from pathlib import Path
 C = None
 
 class AttrDict(dict):
@@ -48,15 +48,19 @@ def attrdict2dict(attrdict):
 
 
 def load_config(fpath):
-    global C
     with open(fpath, "r") as stream:
         try:
             c = dict2attrdict(yaml.safe_load(stream))
-            C = c
             return c
         except Exception as ex:
             print(ex)
             return None
 
 
-load_config('config.yaml')
+C = load_config('config.yaml')
+
+if Path('config_private.yaml').exists():
+    Cp = load_config('config_private.yaml')
+    for k,v in Cp.items():
+        C[k] = v
+    

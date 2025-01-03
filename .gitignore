@@ -7,3 +7,4 @@ search_results.json
 
 __pycache__
 *.pyc
+config_private.yaml
