@@ -16,7 +16,7 @@ def check_match(r):
         if r['id'] in C.ignore_ids:
             return
         # do filter
-        search_text = '[cold] damage'
+        search_text = '4% of damage as extra [cold] damage'
 
         if search_text in r['item']['explicitMods'][0].lower() or search_text in r['item']['explicitMods'][1].lower():
             match = {
@@ -26,6 +26,7 @@ def check_match(r):
                 'id': r['id']
             }
             if match['price'] <= C.max_div:
+                print(f'[green]{match["price"]} [/green]')
                 print(match['explicitMods'])
                 print(f'[red]{match["whisper"]} [/red]')
                 utils.play('assets/found2.mp3')
@@ -68,6 +69,7 @@ class POETradeClient:
             fetch_url = f"{self.base_url}/fetch/{ids}"
             response = requests.get(fetch_url, headers=self.headers)
             if response.status_code == 200:
+                print(utils.nowstr())
                 for r in response.json()['result']:
                     check_match(r)
                 # print(f"New items found: {json.dumps(item_details, indent=2)}")
